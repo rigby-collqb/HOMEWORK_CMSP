@@ -18,36 +18,39 @@
             cursor: pointer;
         }
 
-        /* Notificação estilosa */
+        /* Estilos para notificações */
         .notification, .welcome-message {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.6); /* Fundo transparente */
+            background: rgba(0, 0, 0, 0.6);
             color: #fff;
-            padding: 15px 25px;
+            padding: 20px;
             border-radius: 12px;
-            backdrop-filter: blur(10px); /* Borrado no fundo */
+            backdrop-filter: blur(10px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            transition: opacity 0.3s ease;
-            opacity: 0;
+            display: none;
             z-index: 1000;
             font-size: 16px;
-            display: none;
+            text-align: center;
+            line-height: 1.5;
+            width: 250px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .notification.show, .welcome-message.show {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Estilo de entrada centralizado para mensagem de boas-vindas */
+        /* Centralizar a mensagem de boas-vindas */
         .welcome-message {
-            top: 30%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 250px;
-            text-align: center;
+        }
+
+        /* Exibir notificações */
+        .notification.show, .welcome-message.show {
+            display: flex;
+            opacity: 1;
+            transition: opacity 0.3s ease;
         }
     </style>
 </head>
@@ -90,7 +93,7 @@
 
     <!-- Notificação personalizada -->
     <div id="notification" class="notification">
-        Cade o RA e a senha?
+        Cadê o RA e a senha?
     </div>
 
     <!-- Mensagem de boas-vindas -->
@@ -99,12 +102,10 @@
     </div>
 
     <script>
-        // Tocar áudio
         function playAudio() {
             document.getElementById('background-audio').play();
         }
 
-        // Função chamada ao clicar no botão
         function handleButtonClick(funcName, button) {
             const ra = document.getElementById('ra').value.trim();
             const pwd = document.getElementById('pwd').value.trim();
@@ -118,28 +119,24 @@
             }
         }
 
-        // Exibir notificação de campo vazio
         function showNotification() {
             const notification = document.getElementById('notification');
             notification.classList.add('show');
             setTimeout(() => {
                 notification.classList.remove('show');
-            }, 3000); // A notificação desaparece após 3 segundos
+            }, 3000);
         }
 
-        // Exibir mensagem de boas-vindas ao entrar no site
         function showWelcomeMessage() {
             const welcomeMessage = document.getElementById('welcomeMessage');
             welcomeMessage.classList.add('show');
             setTimeout(() => {
                 welcomeMessage.classList.remove('show');
-            }, 3000); // A mensagem desaparece após 3 segundos
+            }, 3000);
         }
 
-        // Mostrar a mensagem de boas-vindas quando a página carrega
         window.onload = showWelcomeMessage;
 
-        // Função de verificação do captcha
         async function verifyCaptcha(funcName) {
             const hcaptchaResponse = hcaptcha.getResponse();
             if (hcaptchaResponse.length === 0) {
