@@ -11,48 +11,11 @@
     <title>HOMEWORK CMSP</title>
     <link rel="stylesheet" href="./style.css"/>
 
-    <style>
-        .form-buttons button {
-            background-color: blue;
-            color: white;
-            cursor: pointer;
-        }
-
-        /* Estilos para notificações */
-        .notification, .welcome-message {
-            position: fixed;
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            display: none;
-            z-index: 1000;
-            font-size: 16px;
-            text-align: center;
-            line-height: 1.5;
-            width: 250px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Centralizar a mensagem de boas-vindas */
-        .welcome-message {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Exibir notificações */
-        .notification.show, .welcome-message.show {
-            display: flex;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-    </style>
+    !-- Notificação personalizada com barra de tempo -->
+<div id="notification" class="notification">
+    <span>Cadê o RA e a senha?</span>
+    <div class="progress-bar"></div>
+</div>
 </head>
 <body>
     <div class="container">
