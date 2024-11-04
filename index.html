@@ -18,50 +18,24 @@
             cursor: pointer;
         }
 
-        /* Estilos para notificações */
-        .notification, .welcome-message {
-            position: fixed;
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        /* Estilo da notificação */
+        .notification {
             display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 1000;
-            font-size: 16px;
-            text-align: center;
-            line-height: 1.5;
-            width: 250px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Centralizar a mensagem de boas-vindas */
-        .welcome-message {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Exibir notificações */
-        .notification.show, .welcome-message.show {
-            display: flex;
-            opacity: 1;
             transition: opacity 0.3s ease;
         }
 
-        /* Barra de progresso */
-        .progress-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 5px;
-            background-color: #ff0000;
-            width: 100%;
-            transition: width 1s linear;
+        .notification.show {
+            display: block;
+            opacity: 1;
         }
     </style>
 </head>
@@ -104,14 +78,7 @@
 
     <!-- Notificação personalizada -->
     <div id="notification" class="notification">
-        Cadê o RA e a senha?
-        <div class="progress-bar" id="notificationProgress"></div>
-    </div>
-
-    <!-- Mensagem de boas-vindas -->
-    <div id="welcomeMessage" class="welcome-message">
-        Oi
-        <div class="progress-bar" id="welcomeProgress"></div>
+        Cade o RA e a senha?
     </div>
 
     <script>
@@ -134,43 +101,12 @@
 
         function showNotification() {
             const notification = document.getElementById('notification');
-            const progressBar = document.getElementById('notificationProgress');
-            
             notification.classList.add('show');
-            progressBar.style.width = '100%';
 
-            let width = 100;
-            const interval = setInterval(() => {
-                width -= 33.33;
-                progressBar.style.width = `${width}%`;
-
-                if (width <= 0) {
-                    clearInterval(interval);
-                    notification.classList.remove('show');
-                }
-            }, 1000);
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000); // A notificação desaparece após 3 segundos
         }
-
-        function showWelcomeMessage() {
-            const welcomeMessage = document.getElementById('welcomeMessage');
-            const progressBar = document.getElementById('welcomeProgress');
-
-            welcomeMessage.classList.add('show');
-            progressBar.style.width = '100%';
-
-            let width = 100;
-            const interval = setInterval(() => {
-                width -= 33.33;
-                progressBar.style.width = `${width}%`;
-
-                if (width <= 0) {
-                    clearInterval(interval);
-                    welcomeMessage.classList.remove('show');
-                }
-            }, 1000);
-        }
-
-        window.onload = showWelcomeMessage;
 
         async function verifyCaptcha(funcName) {
             const hcaptchaResponse = hcaptcha.getResponse();
