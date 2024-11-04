@@ -12,32 +12,32 @@
     <link rel="stylesheet" href="./style.css"/>
 
     <style>
-        .form-buttons button {
-            background-color: blue;
-            color: white;
-            cursor: pointer;
-        }
+    /* Estilo da notificação */
+    .notification {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #444;
+        color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+        font-family: 'Playfair Display', serif;
+        font-size: 16px;
+    }
 
-        /* Estilo da notificação */
-        .notification {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #333;
-            color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            transition: opacity 0.3s ease;
-        }
+    .notification.show {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
 
-        .notification.show {
-            display: block;
-            opacity: 1;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
