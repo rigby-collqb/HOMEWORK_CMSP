@@ -52,6 +52,17 @@
             opacity: 1;
             transition: opacity 0.3s ease;
         }
+
+        /* Barra de progresso */
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            background-color: #ff0000;
+            width: 100%;
+            transition: width 1s linear;
+        }
     </style>
 </head>
 <body>
@@ -94,11 +105,13 @@
     <!-- Notificação personalizada -->
     <div id="notification" class="notification">
         Cadê o RA e a senha?
+        <div class="progress-bar" id="notificationProgress"></div>
     </div>
 
     <!-- Mensagem de boas-vindas -->
     <div id="welcomeMessage" class="welcome-message">
         Oi
+        <div class="progress-bar" id="welcomeProgress"></div>
     </div>
 
     <script>
@@ -121,18 +134,40 @@
 
         function showNotification() {
             const notification = document.getElementById('notification');
+            const progressBar = document.getElementById('notificationProgress');
+            
             notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
+            progressBar.style.width = '100%';
+
+            let width = 100;
+            const interval = setInterval(() => {
+                width -= 33.33;
+                progressBar.style.width = `${width}%`;
+
+                if (width <= 0) {
+                    clearInterval(interval);
+                    notification.classList.remove('show');
+                }
+            }, 1000);
         }
 
         function showWelcomeMessage() {
             const welcomeMessage = document.getElementById('welcomeMessage');
+            const progressBar = document.getElementById('welcomeProgress');
+
             welcomeMessage.classList.add('show');
-            setTimeout(() => {
-                welcomeMessage.classList.remove('show');
-            }, 3000);
+            progressBar.style.width = '100%';
+
+            let width = 100;
+            const interval = setInterval(() => {
+                width -= 33.33;
+                progressBar.style.width = `${width}%`;
+
+                if (width <= 0) {
+                    clearInterval(interval);
+                    welcomeMessage.classList.remove('show');
+                }
+            }, 1000);
         }
 
         window.onload = showWelcomeMessage;
