@@ -13,13 +13,29 @@
 
     <style>
         .form-buttons button {
-            background-color: blue; /* cor padrão azul */
+            background-color: blue;
             color: white;
             cursor: pointer;
         }
 
-        .form-buttons button.active {
-            background-color: red; /* cor vermelha ao clicar e validar */
+        /* Estilo da notificação */
+        .notification {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+
+        .notification.show {
+            display: block;
+            opacity: 1;
         }
     </style>
 </head>
@@ -37,10 +53,10 @@
                     <input type="password" id="pwd" name="pwd" placeholder="Digite sua senha" />
                 </div>
                 <div class="form-buttons">
-                    <button onclick="handleButtonClick('fazerlicaonormal')">
+                    <button onclick="handleButtonClick('fazerlicaonormal', this)">
                         Atividades Pendentes
                     </button>
-                    <button onclick="handleButtonClick('fazerlicaoatrasada')">
+                    <button onclick="handleButtonClick('fazerlicaoatrasada', this)">
                         Atividades Expiradas
                     </button>
                 </div>
@@ -60,25 +76,36 @@
         Seu navegador não suporta o elemento de áudio.
     </audio>
 
+    <!-- Notificação personalizada -->
+    <div id="notification" class="notification">
+        Cade o RA e a senha?
+    </div>
+
     <script>
         function playAudio() {
-            var audio = document.getElementById('background-audio');
-            audio.play();
+            document.getElementById('background-audio').play();
         }
 
-        function handleButtonClick(funcName) {
+        function handleButtonClick(funcName, button) {
             const ra = document.getElementById('ra').value.trim();
             const pwd = document.getElementById('pwd').value.trim();
-            const button = event.target;
 
             if (ra && pwd) {
-                button.classList.add("active"); // Muda o botão para vermelho
-                playAudio(); // Toca a música
-
-                verifyCaptcha(funcName); // Chama a função para verificar o captcha
+                button.style.backgroundColor = "red";
+                playAudio();
+                verifyCaptcha(funcName);
             } else {
-                alert("Cade o RA e a senha?");
+                showNotification();
             }
+        }
+
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000); // A notificação desaparece após 3 segundos
         }
 
         async function verifyCaptcha(funcName) {
@@ -98,7 +125,6 @@
                         body: JSON.stringify({ name, password, hcaptchaResponse, funcName }),
                     });
                     const result = await response.json();
-                    // Trate o resultado aqui
                 } catch (error) {
                     console.error('Erro:', error);
                 }
