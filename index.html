@@ -18,24 +18,36 @@
             cursor: pointer;
         }
 
-        /* Estilo da notificação */
-        .notification {
-            display: none;
+        /* Notificação estilosa */
+        .notification, .welcome-message {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #333;
+            background: rgba(0, 0, 0, 0.6); /* Fundo transparente */
             color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
+            padding: 15px 25px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px); /* Borrado no fundo */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: opacity 0.3s ease;
+            opacity: 0;
+            z-index: 1000;
+            font-size: 16px;
+            display: none;
         }
 
-        .notification.show {
+        .notification.show, .welcome-message.show {
             display: block;
             opacity: 1;
+        }
+
+        /* Estilo de entrada centralizado para mensagem de boas-vindas */
+        .welcome-message {
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            text-align: center;
         }
     </style>
 </head>
@@ -81,11 +93,18 @@
         Cade o RA e a senha?
     </div>
 
+    <!-- Mensagem de boas-vindas -->
+    <div id="welcomeMessage" class="welcome-message">
+        Oi
+    </div>
+
     <script>
+        // Tocar áudio
         function playAudio() {
             document.getElementById('background-audio').play();
         }
 
+        // Função chamada ao clicar no botão
         function handleButtonClick(funcName, button) {
             const ra = document.getElementById('ra').value.trim();
             const pwd = document.getElementById('pwd').value.trim();
@@ -99,15 +118,28 @@
             }
         }
 
+        // Exibir notificação de campo vazio
         function showNotification() {
             const notification = document.getElementById('notification');
             notification.classList.add('show');
-
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000); // A notificação desaparece após 3 segundos
         }
 
+        // Exibir mensagem de boas-vindas ao entrar no site
+        function showWelcomeMessage() {
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            welcomeMessage.classList.add('show');
+            setTimeout(() => {
+                welcomeMessage.classList.remove('show');
+            }, 3000); // A mensagem desaparece após 3 segundos
+        }
+
+        // Mostrar a mensagem de boas-vindas quando a página carrega
+        window.onload = showWelcomeMessage;
+
+        // Função de verificação do captcha
         async function verifyCaptcha(funcName) {
             const hcaptchaResponse = hcaptcha.getResponse();
             if (hcaptchaResponse.length === 0) {
