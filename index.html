@@ -2,21 +2,27 @@
 <html lang="en">
 <head>
     <link rel="icon" href="./homework.ico" type="image/x-icon">
- <link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
-    <script src="https://hcaptcha.com/1/api.js" async defer type="a58b1ba90e21278a907c765b-text/javascript"></script>
-    <script type="a58b1ba90e21278a907c765b-text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "oqyrq6oe9b");
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://hcaptcha.com/1/api.js" async defer></script>
+    <script async defer src="https://www.clarity.ms/tag/oqyrq6oe9b"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HOMEWORK CMSP</title>
     <link rel="stylesheet" href="./style.css"/>
 
+    <style>
+        .form-buttons button {
+            background-color: grey; /* cor padrão */
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .form-buttons button.enabled {
+            background-color: red; /* cor vermelha quando ativo */
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -25,17 +31,17 @@
             <div class="form">
                 <div class="form-control">
                     <label for="ra">RA</label>
-                    <input type="text" id="ra" name="ra" placeholder="RA + Dígito + UF" />
+                    <input type="text" id="ra" name="ra" placeholder="RA + Dígito + UF" oninput="checkFields()" />
                 </div>
                 <div class="form-control">
                     <label for="pwd">Senha</label>
-                    <input type="password" id="pwd" name="pwd" placeholder="Digite sua senha" />
+                    <input type="password" id="pwd" name="pwd" placeholder="Digite sua senha" oninput="checkFields()" />
                 </div>
                 <div class="form-buttons">
-                    <button onclick="playAudio(); verifyCaptcha('fazerlicaonormal')">
+                    <button id="pendingButton" class="disabled" onclick="verifyCaptcha('fazerlicaonormal')">
                         Atividades Pendentes
                     </button>
-                    <button onclick="playAudio(); verifyCaptcha('fazerlicaoatrasada')">
+                    <button id="expiredButton" class="disabled" onclick="verifyCaptcha('fazerlicaoatrasada')">
                         Atividades Expiradas
                     </button>
                 </div>
@@ -59,6 +65,29 @@
         function playAudio() {
             var audio = document.getElementById('background-audio');
             audio.play();
+        }
+
+        function checkFields() {
+            const ra = document.getElementById('ra').value.trim();
+            const pwd = document.getElementById('pwd').value.trim();
+            const buttons = document.querySelectorAll(".form-buttons button");
+
+            if (ra && pwd) {
+                buttons.forEach(button => {
+                    button.classList.add("enabled");
+                    button.classList.remove("disabled");
+                    button.style.backgroundColor = "red";
+                    button.disabled = false;
+                });
+                playAudio(); // Toca a música quando ambos os campos estão preenchidos
+            } else {
+                buttons.forEach(button => {
+                    button.classList.remove("enabled");
+                    button.classList.add("disabled");
+                    button.style.backgroundColor = "grey";
+                    button.disabled = true;
+                });
+            }
         }
 
         async function verifyCaptcha(funcName) {
@@ -86,3 +115,4 @@
         }
     </script>
 </body>
+</html>
