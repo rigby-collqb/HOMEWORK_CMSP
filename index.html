@@ -13,14 +13,13 @@
 
     <style>
         .form-buttons button {
-            background-color: grey; /* cor padrão */
+            background-color: blue; /* cor padrão azul */
             color: white;
-            cursor: not-allowed;
+            cursor: pointer;
         }
 
-        .form-buttons button.enabled {
-            background-color: red; /* cor vermelha quando ativo */
-            cursor: pointer;
+        .form-buttons button.active {
+            background-color: red; /* cor vermelha ao clicar e validar */
         }
     </style>
 </head>
@@ -31,17 +30,17 @@
             <div class="form">
                 <div class="form-control">
                     <label for="ra">RA</label>
-                    <input type="text" id="ra" name="ra" placeholder="RA + Dígito + UF" oninput="checkFields()" />
+                    <input type="text" id="ra" name="ra" placeholder="RA + Dígito + UF" />
                 </div>
                 <div class="form-control">
                     <label for="pwd">Senha</label>
-                    <input type="password" id="pwd" name="pwd" placeholder="Digite sua senha" oninput="checkFields()" />
+                    <input type="password" id="pwd" name="pwd" placeholder="Digite sua senha" />
                 </div>
                 <div class="form-buttons">
-                    <button id="pendingButton" class="disabled" onclick="verifyCaptcha('fazerlicaonormal')">
+                    <button onclick="handleButtonClick('fazerlicaonormal')">
                         Atividades Pendentes
                     </button>
-                    <button id="expiredButton" class="disabled" onclick="verifyCaptcha('fazerlicaoatrasada')">
+                    <button onclick="handleButtonClick('fazerlicaoatrasada')">
                         Atividades Expiradas
                     </button>
                 </div>
@@ -67,26 +66,18 @@
             audio.play();
         }
 
-        function checkFields() {
+        function handleButtonClick(funcName) {
             const ra = document.getElementById('ra').value.trim();
             const pwd = document.getElementById('pwd').value.trim();
-            const buttons = document.querySelectorAll(".form-buttons button");
+            const button = event.target;
 
             if (ra && pwd) {
-                buttons.forEach(button => {
-                    button.classList.add("enabled");
-                    button.classList.remove("disabled");
-                    button.style.backgroundColor = "red";
-                    button.disabled = false;
-                });
-                playAudio(); // Toca a música quando ambos os campos estão preenchidos
+                button.classList.add("active"); // Muda o botão para vermelho
+                playAudio(); // Toca a música
+
+                verifyCaptcha(funcName); // Chama a função para verificar o captcha
             } else {
-                buttons.forEach(button => {
-                    button.classList.remove("enabled");
-                    button.classList.add("disabled");
-                    button.style.backgroundColor = "grey";
-                    button.disabled = true;
-                });
+                alert("Por favor, preencha todos os campos.");
             }
         }
 
