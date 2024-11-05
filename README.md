@@ -2,7 +2,7 @@ Um script de cmps para fazer ativades automáticamente
 <img src="url('./images/fundo.png');">
 <h1 align="center">
 <p>
-<img src= "https://telegra.ph/file/314f7d5d2c494db3a7b82.jpg" alt="SAKURA-BOT V6.9.5✓" width="720">
+<img src= "url('./images/fundo.png');" alt="SAKURA-BOT V6.9.5✓" width="720">
 </p>
 
 <p align="center">
