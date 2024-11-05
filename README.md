@@ -1,1 +1,1 @@
-cmsp hack
+Um script de cmps para fazer ativades automáticamente
