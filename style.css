@@ -102,15 +102,15 @@ h2.homework {
 }
 
 .captcha-container {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
   margin: 20px 0;
-  text-align: center; /* Centraliza o hCaptcha */
 }
 
-/* Certifique-se de que o hCaptcha tenha um tamanho adequado */
 .h-captcha {
-  display: inline-block;
-  width: 100%; /* Ajuste o tamanho do hCaptcha conforme necessário */
-  max-width: 100%;
+  width: 100%;
+  max-width: 304px; /* Tamanho máximo adequado */
+  height: auto; /* Ajusta a altura automaticamente para manter a proporção */
 }
 
 .credits {
