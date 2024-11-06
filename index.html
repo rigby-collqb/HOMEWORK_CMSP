@@ -12,34 +12,35 @@
     <link rel="stylesheet" href="./style.css"/>
 
     <style>
-        /* Estilo da notificação */
-        .notification {
-            display: none;
-            position: fixed;
-            top: 28%; /* Posiciona um pouco acima do centro */
-            left: 25%; /* Centraliza horizontalmente */
-            transform: translate(-70%, -20px); /* Ajuste no eixo X e Y */
-            background-color: #8b1e3f; /* Vermelho puxado para o roxo */
-            color: #ffffff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-            z-index: 1000;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            opacity: 0;
-            transform: translateY(-20px);
-            font-family: 'Playfair Display', serif;
-            font-size: 16px;
-            text-align: center;
-            font-weight: bold;
-        }
+    /* Estilo da notificação */
+    .notification {
+        display: none;
+        position: fixed;
+        top: 28%; /* Posiciona um pouco acima do centro */
+        left: 25%; /* Centraliza horizontalmente */
+        transform: translate(-70%, -20px); /* Ajuste no eixo X e Y */
+        background-color: #8b1e3f; /* Vermelho puxado para o roxo */
+        color: #ffffff;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        opacity: 0;
+        transform: translateY(-20px);
+        font-family: 'Playfair Display', serif;
+        font-size: 16px;
+        text-align: center;
+        font-weight: bold;
+    }
 
-        .notification.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    .notification.show {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
 </head>
 <body>
     <div class="container">
@@ -65,7 +66,8 @@
             </div>
             <div class="credits">
                 <span>criado por </span>
-                <a href="https://wa.me/5511983118756" class="allvesz">
+                <a href="
+https://wa.me/5511983118756" class="allvesz">
                     <img src="./homework.png" alt="" />
                     <span> allvesz </span>
                 </a>
@@ -82,9 +84,6 @@
     <div id="notification" class="notification">
         Cade o RA e a senha?
     </div>
-
-    <!-- Adicionando o hCaptcha -->
-    <div class="h-captcha" data-sitekey="17ba716c-aa24-4b4c-b5ec-160e46b0d3d0"></div>
 
     <script>
         function playAudio() {
@@ -117,31 +116,26 @@
             const hcaptchaResponse = hcaptcha.getResponse();
             if (hcaptchaResponse.length === 0) {
                 alert('Faz o captcha doidokkk');
-                return; // Não envia o formulário sem o CAPTCHA
-            }
+            } else {
+                const name = document.getElementById('ra').value;
+                const password = document.getElementById('pwd').value;
 
-            const name = document.getElementById('ra').value;
-            const password = document.getElementById('pwd').value;
-
-            try {
-                const response = await fetch('https://doritus.mmrcoss.tech/verify-captcha', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ name, password, hcaptchaResponse, funcName }),
-                });
-                const result = await response.json();
-                if (result.success) {
-                    showNotification('Tarefa realizada com sucesso!');
-                } else {
-                    showNotification('Falha na execução da tarefa.');
+                try {
+                    const response = await fetch('https://doritus.mmrcoss.tech/verify-captcha', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ name, password, hcaptchaResponse, funcName }),
+                    });
+                    const result = await response.json();
+                } catch (error) {
+                    console.error('Erro:', error);
                 }
-            } catch (error) {
-                console.error('Erro:', error);
-                showNotification('Erro ao processar a requisição.');
             }
         }
     </script>
 </body>
 </html>
+
+Agr bota nesse html
